@@ -2,12 +2,14 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class Main {
 
     public static ArrayList<String> lines() throws IOException {
         ArrayList<String> lines = new ArrayList<>();
-        try (FileInputStream fis = new FileInputStream("C:\\Staj\\JIP220722\\IO\\Deneme.txt"); BufferedReader br = new BufferedReader(new InputStreamReader(fis))) {
+        try (FileInputStream fis = new FileInputStream("C:\\Staj\\JIP220722\\Deneme.txt");
+             BufferedReader br = new BufferedReader(new InputStreamReader(fis))) {
             String line = br.readLine();
             while (line != null) {
                 lines.add(line);
@@ -62,12 +64,18 @@ public class Main {
         return result;
     }
 
-    public static void writeResult(HashMap<String, Integer> result) {
+    public static void writeResult(TreeMap<String, Integer> result) {
         for (Map.Entry<String, Integer> entry : result.entrySet()) {
             String key = entry.getKey();
             Integer value = entry.getValue();
             System.out.println(key + " " + value);
         }
+    }
+
+    public static TreeMap<String, Integer> sortHashMap(HashMap<String, Integer> result) {
+        TreeMap<String, Integer> sortedMap = new TreeMap<>();
+        sortedMap.putAll(result);
+        return sortedMap;
     }
 
     public static void main(String[] args) throws IOException {
@@ -78,7 +86,7 @@ public class Main {
         HashMap <String,Integer>result=counter(upperCaseWord);
         HashMap <String,Integer>result=;
         */
-        writeResult(counter(toUpperCase(splitWord(lines()))));
+        writeResult(sortHashMap(counter(toUpperCase(splitWord(lines())))));
 
 
     }
