@@ -13,7 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-@WebServlet(name = "AddContactServlet", value = "/AddContactServlet")
+@WebServlet(name = "AddContactServlet", value = "/elifnur")
 public class AddContactServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

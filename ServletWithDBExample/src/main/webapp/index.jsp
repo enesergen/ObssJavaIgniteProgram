@@ -9,7 +9,7 @@
     <title>JSP - Hello World</title>
 </head>
 <body>
-<form action="AddContactServlet" method="post">
+<form action="elifnur" method="get">
     Name:<input type="text" name="name">
     <br><br>
     Telefon:<input type="text" name="tel">
