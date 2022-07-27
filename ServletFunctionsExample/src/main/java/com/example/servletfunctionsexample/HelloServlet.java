@@ -13,7 +13,8 @@ public class HelloServlet extends HttpServlet {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
+        response.setContentType("text/html;");
+
         if(request.getRequestURL().toString().contains("secured")){
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
         }else {
