@@ -1,8 +1,5 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class Main {
 
@@ -21,14 +18,15 @@ public class Main {
 
     public static ArrayList<String> splitWord(ArrayList<String> lines) {
         ArrayList<String> allWords = new ArrayList<>();
+        StringBuffer sb=null;
         for (String line : lines) {
             String[] words = line.split(" ");
             for (int i = 0; i < words.length; i++) {
                 if (words[i].contains(".")) {
-                    StringBuffer sb = new StringBuffer(words[i]);
+                    sb = new StringBuffer(words[i]);//string substring kullan
                     words[i] = sb.deleteCharAt(sb.length() - 1).toString();
                 } else if (words[i].contains(",")) {
-                    StringBuffer sb = new StringBuffer(words[i]);
+                     sb = new StringBuffer(words[i]);
                     words[i] = sb.deleteCharAt(sb.length() - 1).toString();
                 }
                 allWords.add(words[i]);
@@ -41,7 +39,7 @@ public class Main {
 
     public static ArrayList<String> toUpperCase(ArrayList<String> words) {
         for (int i = 0; i < words.size(); i++) {
-            String upperCase = words.get(i).toUpperCase();
+            String upperCase = words.get(i).toUpperCase(Locale.US);
             words.set(i, upperCase);
         }
         return words;

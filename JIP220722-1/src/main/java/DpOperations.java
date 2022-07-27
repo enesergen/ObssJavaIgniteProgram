@@ -8,9 +8,9 @@ public class DpOperations {
         final String insertQuery = "insert into \"employee\" " +
                 "(\"name\",\"surname\",\"title\",\"birthyear\") " +
                 "values(?,?,?,?);";
-        Connection connection = DBConnector.getConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
-            connection.setAutoCommit(false);
+
+        try (Connection connection = DBConnector.getConnection();PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+            connection.setAutoCommit(false);//
             preparedStatement.setString(1, employee.getName());
             preparedStatement.setString(2, employee.getSurName());
             preparedStatement.setString(3, employee.getTitle());
