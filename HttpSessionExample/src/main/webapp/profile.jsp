@@ -11,12 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-<%
 
-if(session.getAttribute("login")==null){
-    response.sendRedirect("login.jsp");
-}
-%>
 Welcome to Profile Page
 Username:<%=session.getAttribute("login")%>
 <hr>

@@ -12,11 +12,7 @@
 </head>
 <body>
 
-<%
-if(session.getAttribute("login")!=null){
-    response.sendRedirect("profile.jsp");
-}
-%>
+
 <form action="login" method="post">
     Username:<br>
     <input type="text" name="username">
