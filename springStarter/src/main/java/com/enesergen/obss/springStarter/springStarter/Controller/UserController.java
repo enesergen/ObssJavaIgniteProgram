@@ -9,6 +9,7 @@ public class UserController {
 
     @GetMapping("/search")
     public ResponseEntity<?>getUsers(){
+        int i=7/0;
         return ResponseEntity.ok("GetUsers is successful.");
     }
     @PostMapping("/create")
