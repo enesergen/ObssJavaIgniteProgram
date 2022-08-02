@@ -8,13 +8,23 @@ import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
+@Component("singleton")
 @Scope("singleton")
-public class UserDTOSingleton {
+public class UserDTOSingleton implements UserCache{
     public Map<String, UserDTO> users;
 
     @PostConstruct
     void init(){
         users=new HashMap<>();
+    }
+
+    @Override
+    public void put(UserDTO userDTO) {
+        users.put(userDTO.getUsername(),userDTO);
+    }
+
+    @Override
+    public Map<String, UserDTO> getMap() {
+        return users;
     }
 }

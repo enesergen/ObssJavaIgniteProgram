@@ -8,13 +8,23 @@ import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
+@Component("prototype")
 @Scope("prototype")
-public class UserDTOPrototype {
+public class UserDTOPrototype implements UserCache{
     public Map<String, UserDTO> users;
 
     @PostConstruct
     void init() {
         users = new HashMap<>();
+    }
+
+    @Override
+    public void put(UserDTO userDTO) {
+        users.put(userDTO.getUsername(),userDTO);
+    }
+
+    @Override
+    public Map<String, UserDTO> getMap() {
+        return users;
     }
 }
