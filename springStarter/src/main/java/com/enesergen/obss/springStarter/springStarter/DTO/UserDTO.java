@@ -1,4 +1,4 @@
-package com.enesergen.obss.springStarter.springStarter.Entity;
+package com.enesergen.obss.springStarter.springStarter.DTO;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

@@ -1,9 +1,7 @@
 package com.enesergen.obss.springStarter.springStarter.Controller;
 
-import com.enesergen.obss.springStarter.springStarter.Entity.UserDTO;
+import com.enesergen.obss.springStarter.springStarter.DTO.UserDTO;
 
-import com.enesergen.obss.springStarter.springStarter.Exception.GlobalExcepitonHandler;
-import org.apache.catalina.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
