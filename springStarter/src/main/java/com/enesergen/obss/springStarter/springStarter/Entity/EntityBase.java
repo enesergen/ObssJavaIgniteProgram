@@ -21,5 +21,23 @@ public class EntityBase implements Serializable {
     private boolean active;
     @Column(name = "OPERATION_TYPE")
     private String operationType;
+    @PrePersist
+    public void onPrePersist(){
+        this.active=true;
+        this.createDate=new Date();
+        this.updateDate=new Date();
+        this.operationType="SAVE";
+    }
+
+    @PreUpdate
+    public void onPreUpdate(){
+        this.updateDate=new Date();
+        this.operationType="UPDATE";
+    }
+    @PreRemove
+    public void onPreRemove(){
+        this.updateDate=new Date();
+        this.operationType="DELETE";
+    }
 
 }
