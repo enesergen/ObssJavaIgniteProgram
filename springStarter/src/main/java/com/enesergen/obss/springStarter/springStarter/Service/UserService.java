@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class UserService {
     private final RoleDAL roleDAL;
     private final UserDAL userDAL;
     private final UserDALManager userDALManager;
-    private final OurPasswordEncoder encoder;
+    private final PasswordEncoder encoder;
 
     public UserService(ApplicationContext context, @Qualifier("singleton") UserCache userCache, RoleDAL roleDAL, UserDAL userDAL, UserDALManager userDALManager, OurPasswordEncoder encoder) {
         this.context = context;
