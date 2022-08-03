@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 import java.util.HashMap;
 import java.util.List;
 
@@ -62,6 +63,15 @@ public class UserController {
     @PostMapping("/{id}")
     public ResponseEntity<User>removeUser(long id){
         return ResponseEntity.ok(userService.remove(id));
+    }
+
+    @GetMapping("/findByUsername")
+    public ResponseEntity<User>getUserByUsername(@RequestParam(value="username",defaultValue = "") String username){
+        return ResponseEntity.ok(userService.findByUsername(username));
+    }
+    @GetMapping("/findByUsernameStartsWith")
+    public ResponseEntity<List<User>>getUserByUsernameStartsWith(@RequestParam(value="username",defaultValue = "") String username){
+        return ResponseEntity.ok(userService.findByUsernameStartsWith(username));
     }
 
 }

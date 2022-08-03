@@ -56,6 +56,15 @@ public class UserService {
         user.setActive(false);
         return userDAL.save(user);
     }
+    public User findByUsername(String username){
+       var userOpt=userDAL.findByUsername(username);
+        return userOpt.orElseThrow(()->{
+            throw new NullPointerException("User is not found.");
+        });
+    }
+    public List<User>findByUsernameStartsWith(String username){
+        return userDAL.findByUsernameStartsWithAndActiveTrueOrderByCreateDateDesc(username);
+    }
 
 
 
