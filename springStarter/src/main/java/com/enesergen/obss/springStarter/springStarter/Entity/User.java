@@ -1,15 +1,17 @@
 package com.enesergen.obss.springStarter.springStarter.Entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
+
 import javax.persistence.*;
+import java.util.Set;
 
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Table(name = "USER_ACCOUNT")
 public class User extends EntityBase{
 
@@ -17,7 +19,12 @@ public class User extends EntityBase{
     private String username;
     @Column(name = "PASSWORD")
     private String password;
-
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name="USERS_ROLES",
+    joinColumns = {@JoinColumn(name="USER_ID",referencedColumnName = "ID")},
+    inverseJoinColumns = {@JoinColumn(name = "ROLE_ID",referencedColumnName = "ID")})
+    @JsonManagedReference
+    private Set<Role> roles;
 
 
 }

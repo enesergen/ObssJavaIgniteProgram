@@ -56,6 +56,10 @@ public class UserController {
         map.put("Prototype",userCachePrototype);*/
     }
 
+    @GetMapping("/has-role-users")
+    public ResponseEntity<List<User>>getUsersWithUserRole(){
+        return ResponseEntity.ok(userService.getAll());
+    }
     @PutMapping("/{id}")
     public ResponseEntity<User>updateUser(@PathVariable long id, UserUpdateDTO userUpdateDTO){
         return ResponseEntity.ok(userService.update(id,userUpdateDTO));

@@ -3,6 +3,7 @@ package com.enesergen.obss.springStarter.springStarter.Service;
 import com.enesergen.obss.springStarter.springStarter.Cache.UserCache;
 import com.enesergen.obss.springStarter.springStarter.DTO.UserDTO;
 import com.enesergen.obss.springStarter.springStarter.DTO.UserUpdateDTO;
+import com.enesergen.obss.springStarter.springStarter.DataAccessLayer.RoleDAL;
 import com.enesergen.obss.springStarter.springStarter.DataAccessLayer.UserDAL;
 import com.enesergen.obss.springStarter.springStarter.DataAccessLayer.UserDALManager;
 import com.enesergen.obss.springStarter.springStarter.Entity.User;
@@ -12,9 +13,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -24,12 +25,14 @@ public class UserService {
 
     private final UserCache userCache;
 
+    private final RoleDAL roleDAL;
     private final UserDAL userDAL;
     private final UserDALManager userDALManager;
 
-    public UserService(ApplicationContext context, @Qualifier("singleton") UserCache userCache, UserDAL userDAL, UserDALManager userDALManager) {
+    public UserService(ApplicationContext context, @Qualifier("singleton") UserCache userCache, RoleDAL roleDAL, UserDAL userDAL, UserDALManager userDALManager) {
         this.context = context;
         this.userCache = userCache;
+        this.roleDAL = roleDAL;
         this.userDAL = userDAL;
         this.userDALManager = userDALManager;
     }
@@ -40,8 +43,11 @@ public class UserService {
     }
 
     public User saveUser(User user) {
-        userDAL.save(user);
-        return user;
+        var userRolesOpt=roleDAL.findByName("ROLE_USER");
+        user.setRoles(Set.of(userRolesOpt.get()));
+
+        var user1=userDAL.save(user);
+        return user1;
     }
 
     public List<User> getAll() {
