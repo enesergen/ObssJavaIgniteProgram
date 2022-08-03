@@ -19,7 +19,7 @@ public class User extends EntityBase{
     private String username;
     @Column(name = "PASSWORD")
     private String password;
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)//fetch kısmında rolleride çekmesini sağlar
     @JoinTable(name="USERS_ROLES",
     joinColumns = {@JoinColumn(name="USER_ID",referencedColumnName = "ID")},
     inverseJoinColumns = {@JoinColumn(name = "ROLE_ID",referencedColumnName = "ID")})

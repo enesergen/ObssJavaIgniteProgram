@@ -2,6 +2,7 @@ package com.enesergen.obss.springStarter.springStarter.Service;
 
 import com.enesergen.obss.springStarter.springStarter.Cache.UserCache;
 import com.enesergen.obss.springStarter.springStarter.Config.OurPasswordEncoder;
+import com.enesergen.obss.springStarter.springStarter.DTO.MyUserDetails;
 import com.enesergen.obss.springStarter.springStarter.DTO.UserDTO;
 import com.enesergen.obss.springStarter.springStarter.DTO.UserUpdateDTO;
 import com.enesergen.obss.springStarter.springStarter.DataAccessLayer.RoleDAL;
@@ -12,6 +13,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +24,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final ApplicationContext context;
 
@@ -113,4 +117,9 @@ public class UserService {
     }
 
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        var user=this.findByUsername(username);
+        return new MyUserDetails(user);
+    }
 }
