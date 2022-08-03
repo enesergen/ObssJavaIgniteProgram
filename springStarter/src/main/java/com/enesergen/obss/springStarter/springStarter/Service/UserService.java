@@ -66,6 +66,19 @@ public class UserService {
         return userDAL.findByUsernameStartsWithAndActiveTrueOrderByCreateDateDesc(username);
     }
 
+    public User getUserByHQL(long id){
+        var userOpt=userDAL.getById(id);
+        return userOpt.orElseThrow(()->{
+            throw new NullPointerException("User is not found.");
+        });
+    }
+    public User getUserByNative(long id){
+        var userOpt=userDAL.getByIdNative(id);
+        return userOpt.orElseThrow(()->{
+            throw new NullPointerException("User is not found.");
+        });
+    }
+
 
 
 }

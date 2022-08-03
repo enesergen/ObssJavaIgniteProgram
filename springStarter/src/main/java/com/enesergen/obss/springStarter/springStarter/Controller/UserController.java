@@ -74,4 +74,14 @@ public class UserController {
         return ResponseEntity.ok(userService.findByUsernameStartsWith(username));
     }
 
+    @GetMapping("/getUserByHQL")
+    public ResponseEntity<User>getUserByHQL(@RequestParam(value="id",defaultValue = "") long id){
+        return ResponseEntity.ok(userService.getUserByHQL(id));
+    }
+    @GetMapping("/getUserByNative")
+    public ResponseEntity<User>getUserByNative(@RequestParam(value="id",defaultValue = "") long id){
+        return ResponseEntity.ok(userService.getUserByNative(id));
+    }
+
+
 }
