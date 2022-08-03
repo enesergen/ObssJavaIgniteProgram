@@ -1,6 +1,7 @@
 package com.enesergen.obss.springStarter.springStarter.Service;
 
 import com.enesergen.obss.springStarter.springStarter.Cache.UserCache;
+import com.enesergen.obss.springStarter.springStarter.Config.OurPasswordEncoder;
 import com.enesergen.obss.springStarter.springStarter.DTO.UserDTO;
 import com.enesergen.obss.springStarter.springStarter.DTO.UserUpdateDTO;
 import com.enesergen.obss.springStarter.springStarter.DataAccessLayer.RoleDAL;
@@ -28,13 +29,15 @@ public class UserService {
     private final RoleDAL roleDAL;
     private final UserDAL userDAL;
     private final UserDALManager userDALManager;
+    private final OurPasswordEncoder encoder;
 
-    public UserService(ApplicationContext context, @Qualifier("singleton") UserCache userCache, RoleDAL roleDAL, UserDAL userDAL, UserDALManager userDALManager) {
+    public UserService(ApplicationContext context, @Qualifier("singleton") UserCache userCache, RoleDAL roleDAL, UserDAL userDAL, UserDALManager userDALManager, OurPasswordEncoder encoder) {
         this.context = context;
         this.userCache = userCache;
         this.roleDAL = roleDAL;
         this.userDAL = userDAL;
         this.userDALManager = userDALManager;
+        this.encoder = encoder;
     }
 
     public Map<String, UserDTO> save(UserDTO userDTO) {
@@ -45,6 +48,7 @@ public class UserService {
     public User saveUser(User user) {
         var userRolesOpt=roleDAL.findByName("ROLE_USER");
         user.setRoles(Set.of(userRolesOpt.get()));
+        user.setPassword(encoder.encode(user.getPassword()));
 
         var user1=userDAL.save(user);
         return user1;
@@ -63,7 +67,7 @@ public class UserService {
 
     public User update(long id, UserUpdateDTO userUpdateDTO) {
         var user = this.findById(id);
-        user.setPassword(userUpdateDTO.getPassword());
+        user.setPassword(encoder.encode(userUpdateDTO.getPassword()));
         return userDAL.save(user);
     }
 
