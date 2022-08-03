@@ -82,6 +82,18 @@ public class UserController {
     public ResponseEntity<User>getUserByNative(@RequestParam(value="id",defaultValue = "") long id){
         return ResponseEntity.ok(userService.getUserByNative(id));
     }
+    @GetMapping("/getUsersByCriteria")
+    public ResponseEntity<List<User>>getUsersByCriteria(
+            @RequestParam(value="pageSize",defaultValue = "1") int pageSize,
+            @RequestParam(value = "pageNumber",defaultValue = "0")int pageNumber){
+        return ResponseEntity.ok(userService.getUsersWithCriteria(pageNumber,pageSize));
+    }
+    @GetMapping("/getByUsersByPageable")
+    public ResponseEntity<List<User>>getByUsersByPageable(
+            @RequestParam(value="pageSize",defaultValue = "1") int pageSize,
+            @RequestParam(value = "pageNumber",defaultValue = "0")int pageNumber){
+        return ResponseEntity.ok(userService.getUsersWithPageable(pageNumber,pageSize));
+    }
 
 
 }

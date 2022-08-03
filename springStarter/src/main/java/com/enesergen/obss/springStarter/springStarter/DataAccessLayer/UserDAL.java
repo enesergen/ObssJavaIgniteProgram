@@ -19,4 +19,6 @@ public interface UserDAL extends JpaRepository<User, Long> {
 
     @Query(value="select * from user_account where id=:id",nativeQuery = true)
     Optional<User> getByIdNative(long id);
+
+
 }

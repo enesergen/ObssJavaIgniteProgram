@@ -4,9 +4,12 @@ import com.enesergen.obss.springStarter.springStarter.Cache.UserCache;
 import com.enesergen.obss.springStarter.springStarter.DTO.UserDTO;
 import com.enesergen.obss.springStarter.springStarter.DTO.UserUpdateDTO;
 import com.enesergen.obss.springStarter.springStarter.DataAccessLayer.UserDAL;
+import com.enesergen.obss.springStarter.springStarter.DataAccessLayer.UserDALManager;
 import com.enesergen.obss.springStarter.springStarter.Entity.User;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,63 +25,81 @@ public class UserService {
     private final UserCache userCache;
 
     private final UserDAL userDAL;
-    public UserService(ApplicationContext context, @Qualifier("singleton") UserCache userCache,UserDAL userDAL) {
+    private final UserDALManager userDALManager;
+
+    public UserService(ApplicationContext context, @Qualifier("singleton") UserCache userCache, UserDAL userDAL, UserDALManager userDALManager) {
         this.context = context;
         this.userCache = userCache;
-        this.userDAL=userDAL;
+        this.userDAL = userDAL;
+        this.userDALManager = userDALManager;
     }
-    public Map<String, UserDTO>save(UserDTO userDTO){
+
+    public Map<String, UserDTO> save(UserDTO userDTO) {
         userCache.put(userDTO);
         return userCache.getMap();
     }
-    public User saveUser(User user){
+
+    public User saveUser(User user) {
         userDAL.save(user);
         return user;
     }
 
-    public List<User> getAll(){
+    public List<User> getAll() {
         return userDAL.findAll();
     }
-    public User findById(long id){
-        var userOpt=userDAL.findById(id);
-        return userOpt.orElseThrow(()-> {
+
+    public User findById(long id) {
+        var userOpt = userDAL.findById(id);
+        return userOpt.orElseThrow(() -> {
             throw new NullPointerException("User not found.");
         });
     }
 
-    public User update(long id, UserUpdateDTO userUpdateDTO){
-        var user=this.findById(id);
+    public User update(long id, UserUpdateDTO userUpdateDTO) {
+        var user = this.findById(id);
         user.setPassword(userUpdateDTO.getPassword());
         return userDAL.save(user);
     }
-    public User remove(long id){
-        var user=this.findById(id);
+
+    public User remove(long id) {
+        var user = this.findById(id);
         user.setActive(false);
         return userDAL.save(user);
     }
-    public User findByUsername(String username){
-       var userOpt=userDAL.findByUsername(username);
-        return userOpt.orElseThrow(()->{
+
+    public User findByUsername(String username) {
+        var userOpt = userDAL.findByUsername(username);
+        return userOpt.orElseThrow(() -> {
             throw new NullPointerException("User is not found.");
         });
     }
-    public List<User>findByUsernameStartsWith(String username){
+
+    public List<User> findByUsernameStartsWith(String username) {
         return userDAL.findByUsernameStartsWithAndActiveTrueOrderByCreateDateDesc(username);
     }
 
-    public User getUserByHQL(long id){
-        var userOpt=userDAL.getById(id);
-        return userOpt.orElseThrow(()->{
-            throw new NullPointerException("User is not found.");
-        });
-    }
-    public User getUserByNative(long id){
-        var userOpt=userDAL.getByIdNative(id);
-        return userOpt.orElseThrow(()->{
+    public User getUserByHQL(long id) {
+        var userOpt = userDAL.getById(id);
+        return userOpt.orElseThrow(() -> {
             throw new NullPointerException("User is not found.");
         });
     }
 
+    public User getUserByNative(long id) {
+        var userOpt = userDAL.getByIdNative(id);
+        return userOpt.orElseThrow(() -> {
+            throw new NullPointerException("User is not found.");
+        });
+    }
+
+    public List<User> getUsersWithCriteria(int pageNumber, int pageSize) {
+        return userDALManager.getUsersWithCriteria(pageNumber, pageSize);
+    }
+
+    public List<User> getUsersWithPageable(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        return userDAL.findAll(pageable).getContent();
+    }
 
 
 }
