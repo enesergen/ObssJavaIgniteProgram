@@ -1,4 +1,4 @@
-package com.enesergen.bookPortal.core.utility;
+package com.enesergen.bookPortal.core.utilities.entities;
 
 import lombok.Getter;
 import lombok.Setter;

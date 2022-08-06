@@ -1,7 +1,9 @@
-package com.enesergen.bookPortal.entity.concrete;
-import com.enesergen.bookPortal.core.utility.EntityBase;
+package com.enesergen.bookPortal.entities.concretes;
+import com.enesergen.bookPortal.core.utilities.entities.EntityBase;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
@@ -14,8 +16,10 @@ import java.util.Set;
 @Table(name="ROLE")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Role extends EntityBase {
-    @Column(name="name")
+    @Column(name="name",unique = true)
     private String name;
 
     @ManyToMany(mappedBy = "roles")

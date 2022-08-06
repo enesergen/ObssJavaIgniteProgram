@@ -1,6 +1,6 @@
-package com.enesergen.bookPortal.entity.concrete;
+package com.enesergen.bookPortal.entities.concretes;
 
-import com.enesergen.bookPortal.core.utility.EntityBase;
+import com.enesergen.bookPortal.core.utilities.entities.EntityBase;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

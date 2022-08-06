@@ -1,8 +1,10 @@
-package com.enesergen.bookPortal.entity.concrete;
+package com.enesergen.bookPortal.entities.concretes;
 
-import com.enesergen.bookPortal.core.utility.EntityBase;
+import com.enesergen.bookPortal.core.utilities.entities.EntityBase;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -12,6 +14,8 @@ import java.util.Set;
 @Table(name = "AUTHOR")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "books"})
 public class Author extends EntityBase {
     @Column(name = "NAME")
