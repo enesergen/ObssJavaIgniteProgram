@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface BookService {
     Result save(BookDTO bookDTO);
     Result remove(long id);
-    Result update(BookDTO bookDTO);
+    Result update(long id,BookDTO bookDTO);
     DataResult<Book>getOne(long id);
     DataResult<List<Book>>getAll();
 }

@@ -19,7 +19,7 @@ public class BookDTO {
     private int pageSize;
     private String imageUrl;
     private String description;
-    private Author author;
-    private Category category;
+    private int authorId;
+    private int categoryId;
 
 }

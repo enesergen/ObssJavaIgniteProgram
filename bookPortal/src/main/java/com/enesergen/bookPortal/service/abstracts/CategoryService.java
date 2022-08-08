@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface CategoryService {
     Result save(CategoryDTO CategoryDTO);
     Result remove(CategoryDTO CategoryDTO);
-    Result update(CategoryDTO CategoryDTO);
+    Result update(long id,CategoryDTO CategoryDTO);
     DataResult<Category> getOne(long id);
     DataResult<List<Category>>getAll();
 }

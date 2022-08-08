@@ -5,16 +5,21 @@ import com.enesergen.bookPortal.dal.abstratcs.BookDAL;
 import com.enesergen.bookPortal.entities.concretes.Book;
 import com.enesergen.bookPortal.entities.dtos.BookDTO;
 import com.enesergen.bookPortal.service.abstracts.BookService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class BookManager implements BookService {
 
     public BookManager(BookDAL bookDAL) {
         this.bookDAL = bookDAL;
     }
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(BookManager.class);
 
     private final BookDAL bookDAL;
 
@@ -30,6 +35,7 @@ public class BookManager implements BookService {
         book.setCategory(book.getCategory());
         book = this.bookDAL.save(book);
         if (this.bookDAL.existsById(book.getId())) {
+            LOGGER.info("Book saved.Book Name:{}", bookDTO.getName());
             return new SuccessResult("Book adding operation is successful.");
         } else {
             return new ErrorResult("Book adding operation is not successful.");
@@ -42,6 +48,8 @@ public class BookManager implements BookService {
         if (book.isPresent()) {
             book.get().setActive(false);
             this.bookDAL.save(book.get());
+            LOGGER.info("Book active status changed to FALSE.Book Name:{}", book.get().getName());
+
             return new SuccessResult("Remove operation is successful.");
         } else {
             return new ErrorResult("Book is not found");
@@ -49,17 +57,19 @@ public class BookManager implements BookService {
     }
 
     @Override
-    public Result update(BookDTO bookDTO) {
-        Book book = this.bookDAL.getByIsbn(bookDTO.getIsbn());
-        book.setName(bookDTO.getName());
-        book.setIsbn(bookDTO.getIsbn());
-        book.setPageSize(bookDTO.getPageSize());
-        book.setImageUrl(bookDTO.getImageUrl());
-        book.setDescription(bookDTO.getDescription());
-        book.setAuthor(book.getAuthor());
-        book.setCategory(book.getCategory());
-        book = this.bookDAL.save(book);
-        if (this.bookDAL.existsById(book.getId())) {
+    public Result update(long id, BookDTO bookDTO) {
+        var book = this.bookDAL.findById(id);
+        if (book.isPresent()) {
+            book.get().setName(bookDTO.getName());
+            book.get().setIsbn(bookDTO.getIsbn());
+            book.get().setPageSize(bookDTO.getPageSize());
+            book.get().setImageUrl(bookDTO.getImageUrl());
+            book.get().setDescription(bookDTO.getDescription());
+            book.get().setAuthor();
+            book.get().setCategory(bookDTO.getCategory());
+            this.bookDAL.save(book.get());
+            LOGGER.info("Book updated.Book Name:{}", book.get().getName());
+
             return new SuccessResult("Update operation is successful.");
         } else {
             return new ErrorResult("Update operation is not successful.");
@@ -70,6 +80,8 @@ public class BookManager implements BookService {
     public DataResult<Book> getOne(long id) {
         Optional<Book> book = this.bookDAL.findById(id);
         if (book.isPresent()) {
+            LOGGER.info("Get one book method called.Book Name:{}", book.get().getName());
+
             return new SuccessDataResult<>(book.get(), "Book was found.");
         } else {
             return new ErrorDataResult<>("Book was not found.");
@@ -78,10 +90,12 @@ public class BookManager implements BookService {
 
     @Override
     public DataResult<List<Book>> getAll() {
-        List<Book>books=this.bookDAL.findAll();
-        if(!books.isEmpty()){
-            return new SuccessDataResult<>(books,"Books were found.");
-        }else{
+        List<Book> books = this.bookDAL.findAll();
+        if (!books.isEmpty()) {
+            LOGGER.info("Get all books method called.");
+
+            return new SuccessDataResult<>(books, "Books were found.");
+        } else {
             return new ErrorDataResult<>("Books were not found.");
         }
     }
