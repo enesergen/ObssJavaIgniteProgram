@@ -26,9 +26,9 @@ public class BookController implements AbstractBookController {
         return this.bookService.save(bookDTO);
     }
 
-    @DeleteMapping("")
+    @DeleteMapping("/{id}")
     @Override
-    public Result removeBook(@PathVariable long id) {
+    public Result removeBook( @PathVariable long id) {
         return this.bookService.remove(id);
     }
 

@@ -19,6 +19,9 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Role extends EntityBase {
+    Role(String name){
+        this.name=name;
+    }
     @Column(name="name",unique = true)
     private String name;
 

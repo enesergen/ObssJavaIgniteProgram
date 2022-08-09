@@ -1,7 +1,5 @@
 package com.enesergen.bookPortal.entities.dtos;
 
-import com.enesergen.bookPortal.entities.concretes.Author;
-import com.enesergen.bookPortal.entities.concretes.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +17,5 @@ public class BookDTO {
     private int pageSize;
     private String imageUrl;
     private String description;
-    private int authorId;
-    private int categoryId;
-
+    private long authorId;
 }

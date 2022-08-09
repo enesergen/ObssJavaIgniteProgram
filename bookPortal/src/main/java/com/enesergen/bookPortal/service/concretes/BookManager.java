@@ -1,6 +1,7 @@
 package com.enesergen.bookPortal.service.concretes;
 
 import com.enesergen.bookPortal.core.utilities.results.*;
+import com.enesergen.bookPortal.dal.abstratcs.AuthorDAL;
 import com.enesergen.bookPortal.dal.abstratcs.BookDAL;
 import com.enesergen.bookPortal.entities.concretes.Book;
 import com.enesergen.bookPortal.entities.dtos.BookDTO;
@@ -15,13 +16,15 @@ import java.util.Optional;
 @Service
 public class BookManager implements BookService {
 
-    public BookManager(BookDAL bookDAL) {
+    public BookManager(BookDAL bookDAL, AuthorDAL authorDAL) {
         this.bookDAL = bookDAL;
+        this.authorDAL = authorDAL;
     }
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BookManager.class);
 
     private final BookDAL bookDAL;
+    private final AuthorDAL authorDAL;
 
     @Override
     public Result save(BookDTO bookDTO) {
@@ -31,8 +34,12 @@ public class BookManager implements BookService {
         book.setPageSize(bookDTO.getPageSize());
         book.setImageUrl(bookDTO.getImageUrl());
         book.setDescription(bookDTO.getDescription());
-        book.setAuthor(book.getAuthor());
-        book.setCategory(book.getCategory());
+        var author=this.authorDAL.findById(bookDTO.getAuthorId());
+        if(author.isPresent()){
+            book.setAuthor(author.get());
+        }else{
+            book.setAuthor(null);
+        }
         book = this.bookDAL.save(book);
         if (this.bookDAL.existsById(book.getId())) {
             LOGGER.info("Book saved.Book Name:{}", bookDTO.getName());
@@ -65,8 +72,14 @@ public class BookManager implements BookService {
             book.get().setPageSize(bookDTO.getPageSize());
             book.get().setImageUrl(bookDTO.getImageUrl());
             book.get().setDescription(bookDTO.getDescription());
-            book.get().setAuthor();
-            book.get().setCategory(bookDTO.getCategory());
+            var author=this.authorDAL.findById(bookDTO.getAuthorId());
+            if(author.isPresent()){
+                book.get().setAuthor(author.get());
+            }else{
+                book.get().setAuthor(null);
+            }
+
+
             this.bookDAL.save(book.get());
             LOGGER.info("Book updated.Book Name:{}", book.get().getName());
 

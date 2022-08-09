@@ -30,9 +30,6 @@ public class Book  extends EntityBase {
     @ManyToOne()
     @JoinColumn(name="AUTHOR_ID")
     private Author author;
-    @ManyToOne()
-    @JoinColumn(name="CATEGORY_ID")
-    private Category category;
 
     @ManyToMany(mappedBy = "books")
     @JsonBackReference
