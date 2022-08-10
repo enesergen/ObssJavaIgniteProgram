@@ -1,5 +1,6 @@
 package com.enesergen.bookPortal.service.concretes;
 
+import com.enesergen.bookPortal.core.utilities.configurations.secuirties.MyUserDetails;
 import com.enesergen.bookPortal.core.utilities.results.*;
 import com.enesergen.bookPortal.dal.abstratcs.BookDAL;
 import com.enesergen.bookPortal.dal.abstratcs.RoleDAL;
@@ -12,6 +13,10 @@ import com.enesergen.bookPortal.entities.dtos.UserDTO;
 import com.enesergen.bookPortal.service.abstracts.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -20,15 +25,23 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-public class UserManager implements UserService {
+public class UserManager implements UserService, UserDetailsService {
     private final UserDAL userDAL;
     private final RoleDAL roleDAL;
     private final BookDAL bookDAL;
+    private final PasswordEncoder encoder;
 
-    public UserManager(UserDAL userDAL, RoleDAL roleDAL, BookDAL bookDAL) {
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        var user = this.userDAL.getByUsername(username);
+        return new MyUserDetails(user);
+    }
+
+    public UserManager(UserDAL userDAL, RoleDAL roleDAL, BookDAL bookDAL, PasswordEncoder encoder) {
         this.userDAL = userDAL;
         this.roleDAL = roleDAL;
         this.bookDAL = bookDAL;
+        this.encoder = encoder;
     }
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserManager.class);
@@ -38,7 +51,7 @@ public class UserManager implements UserService {
         if (!this.userDAL.existsByUsername(userDTO.getUsername())) {
             User user = new User();
             user.setUsername(userDTO.getUsername());
-            user.setPassword(userDTO.getPassword());
+            user.setPassword(encoder.encode(userDTO.getPassword()));
             user.setBooks(null);
             user.setFavoriteBooks(null);
             var role = this.roleDAL.getByName("ROLE_USER");
@@ -79,7 +92,7 @@ public class UserManager implements UserService {
     public Result update(UserDTO userDTO) {
         if (this.userDAL.existsByUsername(userDTO.getUsername())) {
             User user = this.userDAL.getByUsername(userDTO.getUsername());
-            user.setPassword(userDTO.getPassword());
+            user.setPassword(encoder.encode(userDTO.getPassword()));
             this.userDAL.save(user);
             LOGGER.info("User password changed, new password:{}", user.getPassword());
 
@@ -210,4 +223,6 @@ public class UserManager implements UserService {
                     ErrorResult("User is could not found.");
         }
     }
+
+
 }

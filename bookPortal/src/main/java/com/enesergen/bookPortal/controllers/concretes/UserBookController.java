@@ -5,20 +5,33 @@ import com.enesergen.bookPortal.core.utilities.results.DataResult;
 import com.enesergen.bookPortal.core.utilities.results.Result;
 import com.enesergen.bookPortal.entities.concretes.Book;
 import com.enesergen.bookPortal.entities.dtos.BookDTO;
+import com.enesergen.bookPortal.service.abstracts.BookService;
 import com.enesergen.bookPortal.service.abstracts.UserService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
+import java.util.List;
 import java.util.Set;
 
 @RestController
 @RequestMapping("/userbooks")
 public class UserBookController implements AbstractUserBookController {
     private final UserService userService;
+    private final BookService bookService;
 
-    public UserBookController(UserService userService) {
+    public UserBookController(UserService userService, BookService bookService) {
         this.userService = userService;
+        this.bookService = bookService;
     }
 
+    @GetMapping("/books")
+    public DataResult<List<Book>> getAllActiveBooks(){
+        return this.bookService.getAllActiveBooks();
+    }
+    @GetMapping("/{search}")
+    public DataResult<List<Book>> searchBooks(@PathVariable String search){
+        return this.bookService.searchBooks(search);
+    }
 
     @PostMapping("/books/{id}")
     @Override

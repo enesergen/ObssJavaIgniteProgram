@@ -112,4 +112,27 @@ public class BookManager implements BookService {
             return new ErrorDataResult<>("Books were not found.");
         }
     }
+
+    @Override
+    public DataResult<List<Book>> getAllActiveBooks() {
+        var books=this.bookDAL.findByActiveTrue();
+        if(!books.isEmpty()){
+            LOGGER.info("Get all ACTIVE books method called.");
+            return new SuccessDataResult<>(books,"Active books has been listed.");
+        }else{
+            return new ErrorDataResult<>("Active book list is empty.");
+        }
+    }
+
+    @Override
+    public DataResult<List<Book>> searchBooks(String search) {
+        var books=this.bookDAL.searchBooks(search);
+        if(!books.isEmpty()){
+            LOGGER.info("Search books method called.");
+            return new SuccessDataResult<>(books,"Searched books has been listed.");
+        }else{
+            return new ErrorDataResult<>("Searched book could not be found.");
+
+        }
+    }
 }
