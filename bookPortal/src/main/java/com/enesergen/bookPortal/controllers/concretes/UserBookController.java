@@ -5,11 +5,12 @@ import com.enesergen.bookPortal.core.utilities.results.DataResult;
 import com.enesergen.bookPortal.core.utilities.results.Result;
 import com.enesergen.bookPortal.entities.concretes.Book;
 import com.enesergen.bookPortal.entities.dtos.BookDTO;
+import com.enesergen.bookPortal.entities.dtos.UserDTO;
 import com.enesergen.bookPortal.service.abstracts.BookService;
 import com.enesergen.bookPortal.service.abstracts.UserService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
 
@@ -67,5 +68,10 @@ public class UserBookController implements AbstractUserBookController {
     @Override
     public Result removeFavoriteBook(@PathVariable long id, @RequestBody BookDTO bookDTO) {
         return this.userService.removeFavoriteBook(id,bookDTO);
+    }
+    @PutMapping("")
+    @Override
+    public Result updateUSer(@Valid @RequestBody UserDTO userDTO) {
+        return this.userService.update(userDTO);
     }
 }

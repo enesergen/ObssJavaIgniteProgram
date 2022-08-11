@@ -8,6 +8,7 @@ import com.enesergen.bookPortal.entities.concretes.User;
 import com.enesergen.bookPortal.entities.dtos.UserDTO;
 import com.enesergen.bookPortal.service.abstracts.UserService;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,14 +21,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-public class UserController implements AbstractUserController {
+public class UserController implements AbstractUserController{
     private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    @PostMapping("")
+    @PostMapping("/create")
     @Override
     public Result createUser(@Valid @RequestBody UserDTO userDTO) {
         return this.userService.save(userDTO);
@@ -38,6 +39,7 @@ public class UserController implements AbstractUserController {
     public Result removeUser(@Valid @RequestBody UserDTO userDTO) {
         return this.userService.remove(userDTO);
     }
+
 
     @PutMapping("")
     @Override

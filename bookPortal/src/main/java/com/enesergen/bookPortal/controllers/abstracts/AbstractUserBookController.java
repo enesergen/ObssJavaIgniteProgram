@@ -4,6 +4,7 @@ import com.enesergen.bookPortal.core.utilities.results.DataResult;
 import com.enesergen.bookPortal.core.utilities.results.Result;
 import com.enesergen.bookPortal.entities.concretes.Book;
 import com.enesergen.bookPortal.entities.dtos.BookDTO;
+import com.enesergen.bookPortal.entities.dtos.UserDTO;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Set;
@@ -17,4 +18,5 @@ public interface AbstractUserBookController {
     Result addFavoriteBook(long id,BookDTO bookDTO);
     DataResult<Set<Book>> listMyFavoriteBook(long id);
     Result removeFavoriteBook(long id,BookDTO bookDTO);
+    Result updateUSer(UserDTO userDTO);
 }
