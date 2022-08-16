@@ -118,7 +118,7 @@ public class UserManager implements UserService, UserDetailsService {
             set.add(role);
             user.setRoles(set);
             user = this.userDAL.save(user);
-            if (this.userDAL.existsById(user.getId())) {
+            if (this.userDAL.existsById(user.getId())) {//password logger içinde olmamalı
                 LOGGER.info("Operation:Create User; Username:{} - Password:{}", user.getUsername(), user.getPassword());
                 return new SuccessResult("User adding operation is successful.");
             } else {
