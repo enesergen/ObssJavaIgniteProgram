@@ -17,6 +17,11 @@
 		<java.version>18</java.version>
 	</properties>
 <dependencies>
+	<dependency>
+		<groupId>org.apache.httpcomponents</groupId>
+		<artifactId>httpclient</artifactId>
+		<scope>test</scope>
+	</dependency>
 	<!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
 	<dependency>
 		<groupId>com.auth0</groupId>

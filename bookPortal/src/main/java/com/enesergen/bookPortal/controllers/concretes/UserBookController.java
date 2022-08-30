@@ -31,47 +31,50 @@ public class UserBookController implements AbstractUserBookController {
     }
     @GetMapping("/{search}")
     public DataResult<List<Book>> searchBooks(@PathVariable String search){
+        System.out.println(search);
         return this.bookService.searchBooks(search);
+
     }
 
-    @PostMapping("/books/{id}")
+    @PostMapping("/books/{username}")
     @Override
-    public Result addBook(@PathVariable long id, @RequestBody BookDTO bookDTO) {
-        return this.userService.addBook(id,bookDTO);
+    public Result addBook(@PathVariable String  username, @RequestBody BookDTO bookDTO) {
+        return this.userService.addBook(username,bookDTO);
     }
 
-    @GetMapping("/books/{id}")
+    @GetMapping("/books/{username}")
     @Override
-    public DataResult<Set<Book>> listMyBook(@PathVariable long id) {
-        return this.userService.listMyBooks(id);
+    public DataResult<Set<Book>> listMyBook(@PathVariable String username) {
+        return this.userService.listMyBooks(username);
     }
 
-    @DeleteMapping("/books/{id}")
+    @DeleteMapping("/books/{username}")
     @Override
-    public Result removeBook(@PathVariable long id, @RequestBody BookDTO bookDTO) {
-        return this.userService.removeBook(id,bookDTO);
+    public Result removeBook(@PathVariable String username, @RequestBody BookDTO bookDTO) {
+        return this.userService.removeBook(username,bookDTO);
     }
 
-    @PostMapping("/fbooks/{id}")
+    @PostMapping("/fbooks/{username}")
     @Override
-    public Result addFavoriteBook(@PathVariable long id, @RequestBody BookDTO bookDTO) {
-        return this.userService.addFavoriteBook(id,bookDTO);
+    public Result addFavoriteBook(@PathVariable String username, @RequestBody BookDTO bookDTO) {
+        return this.userService.addFavoriteBook(username,bookDTO);
     }
 
-    @GetMapping("/fbooks/{id}")
+    @GetMapping("/fbooks/{username}")
     @Override
-    public DataResult<Set<Book>> listMyFavoriteBook(@PathVariable long id) {
-        return this.userService.listMyFavoriteBooks(id);
+    public DataResult<Set<Book>> listMyFavoriteBook(@PathVariable String username) {
+        return this.userService.listMyFavoriteBooks(username);
     }
 
-    @DeleteMapping("/fbooks/{id}")
+    @DeleteMapping("/fbooks/{username}")
     @Override
-    public Result removeFavoriteBook(@PathVariable long id, @RequestBody BookDTO bookDTO) {
-        return this.userService.removeFavoriteBook(id,bookDTO);
+    public Result removeFavoriteBook(@PathVariable String username, @RequestBody BookDTO bookDTO) {
+        return this.userService.removeFavoriteBook(username,bookDTO);
     }
     @PutMapping("")
     @Override
     public Result updateUSer(@Valid @RequestBody UserDTO userDTO) {
         return this.userService.update(userDTO);
     }
+
 }

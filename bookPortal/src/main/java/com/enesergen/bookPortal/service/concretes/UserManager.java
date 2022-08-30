@@ -186,13 +186,13 @@ public class UserManager implements UserService, UserDetailsService {
     }
 
     @Override
-    public Result addBook(long id, BookDTO bookDTO) {
-        var user = this.userDAL.findById(id);
-        if (user.isPresent()) {
+    public Result addBook(String username, BookDTO bookDTO) {
+        var user = this.userDAL.getByUsername(username);
+        if (user!=null) {
             var book = this.bookDAL.getByIsbn(bookDTO.getIsbn());
             if (book != null) {
-                user.get().addBook(book);
-                this.userDAL.save(user.get());
+                user.addBook(book);
+                this.userDAL.save(user);
                 LOGGER.info("Book added book list.Book name:{}", book.getName());
                 return new SuccessResult("Book added user's book list.");
             } else {
@@ -204,25 +204,25 @@ public class UserManager implements UserService, UserDetailsService {
     }
 
     @Override
-    public DataResult<Set<Book>> listMyBooks(long id) {
-        var user = this.userDAL.findById(id);
-        if (user.isPresent()) {
-            LOGGER.info("User called listMyBooks method.Username:{}", user.get().getUsername());
-            return new SuccessDataResult<>(user.get().myBooksList(), "Get book list operation is successful.");
+    public DataResult<Set<Book>> listMyBooks(String username) {
+        var user = this.userDAL.getByUsername(username);
+        if (user!=null) {
+            LOGGER.info("User called listMyBooks method.Username:{}", user.getUsername());
+            return new SuccessDataResult<>(user.myBooksList(), "Get book list operation is successful.");
         } else {
             return new ErrorDataResult<>("User could not be found.");
         }
     }
 
     @Override
-    public Result removeBook(long id, BookDTO bookDTO) {
-        var user = this.userDAL.findById(id);
-        if (user.isPresent()) {
+    public Result removeBook(String username, BookDTO bookDTO) {
+        var user = this.userDAL.getByUsername(username);
+        if (user!=null) {
             var book = this.bookDAL.getByIsbn(bookDTO.getIsbn());
-            if (book != null && user.get().myBooksList().contains(book)) {
-                user.get().myBooksList().remove(book);
-                this.userDAL.save(user.get());
-                LOGGER.info("Book removed user's book list.Username: {} - Book name:{}", user.get().getUsername(), book.getName());
+            if (book != null && user.myBooksList().contains(book)) {
+                user.myBooksList().remove(book);
+                this.userDAL.save(user);
+                LOGGER.info("Book removed user's book list.Username: {} - Book name:{}", user.getUsername(), book.getName());
                 return new SuccessResult("removing book from book list  is successful.");
             } else {
                 return new
@@ -235,13 +235,13 @@ public class UserManager implements UserService, UserDetailsService {
     }
 
     @Override
-    public Result addFavoriteBook(long id, BookDTO bookDTO) {
-        var user = this.userDAL.findById(id);
-        if (user.isPresent()) {
+    public Result addFavoriteBook(String username, BookDTO bookDTO) {
+        var user = this.userDAL.getByUsername(username);
+        if (user!=null) {
             var book = this.bookDAL.getByIsbn(bookDTO.getIsbn());
             if (book != null) {
-                user.get().addFavoriteBook(book);
-                this.userDAL.save(user.get());
+                user.addFavoriteBook(book);
+                this.userDAL.save(user);
                 LOGGER.info("Book added favorite book list.Book name:{}", book.getName());
                 return new SuccessResult("Book added user's  favorite book list.");
             } else {
@@ -253,25 +253,25 @@ public class UserManager implements UserService, UserDetailsService {
     }
 
     @Override
-    public DataResult<Set<Book>> listMyFavoriteBooks(long id) {
-        var user = this.userDAL.findById(id);
-        if (user.isPresent()) {
-            LOGGER.info("User called listMyFavoriteBooks method.Username:{}", user.get().getUsername());
-            return new SuccessDataResult<>(user.get().myFavoriteBooksList(), "Get favorite book list operation is successful.");
+    public DataResult<Set<Book>> listMyFavoriteBooks(String username) {
+        var user = this.userDAL.getByUsername(username);
+        if (user!=null) {
+            LOGGER.info("User called listMyFavoriteBooks method.Username:{}", user.getUsername());
+            return new SuccessDataResult<>(user.myFavoriteBooksList(), "Get favorite book list operation is successful.");
         } else {
             return new ErrorDataResult<>("User could not be found.");
         }
     }
 
     @Override
-    public Result removeFavoriteBook(long id, BookDTO bookDTO) {
-        var user = this.userDAL.findById(id);
-        if (user.isPresent()) {
+    public Result removeFavoriteBook(String username, BookDTO bookDTO) {
+        var user = this.userDAL.getByUsername(username);
+        if (user!=null) {
             var book = this.bookDAL.getByIsbn(bookDTO.getIsbn());
-            if (book != null && user.get().myFavoriteBooksList().contains(book)) {
-                user.get().myFavoriteBooksList().remove(book);
-                this.userDAL.save(user.get());
-                LOGGER.info("Book removed user's favorite book list.Username: {} - Book name:{}", user.get().getUsername(), book.getName());
+            if (book != null && user.myFavoriteBooksList().contains(book)) {
+                user.myFavoriteBooksList().remove(book);
+                this.userDAL.save(user);
+                LOGGER.info("Book removed user's favorite book list.Username: {} - Book name:{}", user.getUsername(), book.getName());
                 return new SuccessResult("removing book from favorite book list  is successful.");
             } else {
                 return new

@@ -23,13 +23,13 @@ public interface UserService extends UserDetailsService {
     DataResult<User> getOne(long id);
     DataResult<List<User>>getAll();
 
-    Result addBook(long id,BookDTO bookDTO);
-    DataResult<Set<Book>> listMyBooks(long id);
-    Result removeBook(long id,BookDTO bookDTO);
+    Result addBook(String username,BookDTO bookDTO);
+    DataResult<Set<Book>> listMyBooks(String username);
+    Result removeBook(String username,BookDTO bookDTO);
 
-    Result addFavoriteBook(long id,BookDTO bookDTO);
-    DataResult<Set<Book>> listMyFavoriteBooks(long id);
-    Result removeFavoriteBook(long id,BookDTO bookDTO);
+    Result addFavoriteBook(String username,BookDTO bookDTO);
+    DataResult<Set<Book>> listMyFavoriteBooks(String username);
+    Result removeFavoriteBook(String username,BookDTO bookDTO);
 
     void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException;
 }

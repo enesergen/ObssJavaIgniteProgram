@@ -11,12 +11,12 @@ import java.util.Set;
 
 @RestController
 public interface AbstractUserBookController {
-    Result addBook(long id,BookDTO bookDTO);
-    DataResult<Set<Book>> listMyBook(long id);
-    Result removeBook(long id,BookDTO bookDTO);
+    Result addBook(String username,BookDTO bookDTO);
+    DataResult<Set<Book>> listMyBook(String username);
+    Result removeBook(String username,BookDTO bookDTO);
 
-    Result addFavoriteBook(long id,BookDTO bookDTO);
-    DataResult<Set<Book>> listMyFavoriteBook(long id);
-    Result removeFavoriteBook(long id,BookDTO bookDTO);
+    Result addFavoriteBook(String username,BookDTO bookDTO);
+    DataResult<Set<Book>> listMyFavoriteBook(String username);
+    Result removeFavoriteBook(String username,BookDTO bookDTO);
     Result updateUSer(UserDTO userDTO);
 }

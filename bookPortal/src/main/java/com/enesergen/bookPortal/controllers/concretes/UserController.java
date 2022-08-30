@@ -8,7 +8,6 @@ import com.enesergen.bookPortal.entities.concretes.User;
 import com.enesergen.bookPortal.entities.dtos.UserDTO;
 import com.enesergen.bookPortal.service.abstracts.UserService;
 
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
