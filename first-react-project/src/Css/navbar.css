@@ -1,0 +1,33 @@
+#navbar{
+    display: flex ;
+    justify-content: space-around
+
+
+}
+button{
+    border:none;
+    background-color: transparent;
+    font-size: 20px;
+    margin: 20px;
+
+    background-color: #acacc5;
+    color: black;
+    font-weight: bold;
+    border: 1px solid black;
+    padding:5px;
+    border-radius: 20px;
+}
+button:hover{
+    color: white;
+    background-color: black;
+    border:1px solid white;
+    border-radius: 0;
+}
+
+.search-input{
+    border: none;
+    border-radius: 5px;
+    background-color: white;
+    display: inline-block;
+    padding: 10px;
+}

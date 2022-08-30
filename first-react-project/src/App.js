@@ -1,7 +1,8 @@
 import React from "react";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import Login from "./Login"
-import Register from "./Register"
+import Login from "./Pages/Login"
+import Register from "./Pages/Register"
+import Home from "./Pages/Home"
 
 
 export default function App() {
@@ -12,6 +13,7 @@ export default function App() {
                     <Route exact path="/" element={<Login/>}/>
                     <Route exact path="/login" element={<Login/>}/>
                     <Route exact path="/register" element={<Register/>}/>
+                    <Route exact path="/home" element={<Home/>}/>
                 </Routes>
             </BrowserRouter>
         </>

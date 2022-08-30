@@ -1,0 +1,60 @@
+*,
+*:after,
+*:before{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-family: 'Montserrat', sans-serif !important;
+    background-color: #e8e8e8 !important;
+}
+.container{
+    margin-top:150px;
+
+}
+.card{
+    width: 60%;
+    border:3px solid grey !important;
+}
+#login-button-div{
+    display: flex;
+    justify-content: end;
+}
+#login-button{
+    font-weight: bold;
+
+}
+#error-message{
+    color: black;
+    text-align: center;
+}
+#info-message{
+    color: black;
+    text-align: center;
+}
+#register-button{
+    width: 100%;
+}
+#navigate-register{
+    display: flex;
+    justify-content: end;
+}
+#navigate-button{
+    font-size: 18px;
+}
+#navigate-login{
+    display: flex;
+    justify-content: end;
+    margin: 20px;
+    background-color: transparent !important;
+}
+li{
+    list-style: none;
+}
+.item-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+}
